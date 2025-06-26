@@ -135,7 +135,7 @@
 						<strong>UV Index:</strong>
 						<span id="uv">{data.current.uv}</span>
 					</div>
-				{:else if search_type === "forecast"}
+				{:else if search_type === "forecast" && data.forecast !== undefined}
 					<div class="forecast-grid">
 						{#each data.forecast.forecastday as day}
 							<div class="card">
@@ -182,145 +182,344 @@
 </main>
 
 <style>
-
-	body, html{
-		background-color: #000000;
+	/* Dark Weather App Styles */
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
 	}
 
-	/* Main container */
+	body {
+		font-family:
+			"Inter",
+			-apple-system,
+			BlinkMacSystemFont,
+			"Segoe UI",
+			sans-serif;
+		background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+		color: #e0e0e0;
+		min-height: 100vh;
+	}
+
 	main {
+		min-height: 100vh;
+		min-width: 100vw;
 		padding: 2rem;
-		max-width: 800px;
-		margin: 0 auto;
-		font-family: "Segoe UI", sans-serif;
-		color: #dbdbdb;
-		background-color: #292929;
-	}
-
-	/* Layout */
-	#main {
 		display: flex;
-		flex-direction: column;
-		gap: 1.5rem;
+		justify-content: center;
+		align-items: flex-start;
 	}
 
-	/* Search and selection UI */
-	#search-type-box,
+	#main {
+		width: 100%;
+		max-width: 800px;
+		background: rgba(20, 20, 20, 0.9);
+		backdrop-filter: blur(20px);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 20px;
+		padding: 2.5rem;
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+	}
+
+	/* Search Type Box */
+	#search-type-box {
+		background: rgba(30, 30, 30, 0.8);
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		border-radius: 16px;
+		padding: 1.5rem;
+		margin-bottom: 2rem;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	#search-type-box h4 {
+		color: #ffffff;
+		font-size: 1.1rem;
+		font-weight: 600;
+		margin: 0;
+	}
+
+	#search-type-box h5 {
+		color: #b0b0b0;
+		font-size: 0.9rem;
+		font-weight: 500;
+		margin: 0;
+	}
+
+	#search-menu {
+		background: rgba(40, 40, 40, 0.9);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 8px;
+		color: #ffffff;
+		padding: 0.5rem 1rem;
+		font-size: 0.9rem;
+		outline: none;
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
+
+	#search-menu:hover {
+		border-color: rgba(255, 255, 255, 0.2);
+		background: rgba(50, 50, 50, 0.9);
+	}
+
+	#search-menu:focus {
+		border-color: #4f46e5;
+		box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+	}
+
+	#days-input {
+		background: rgba(40, 40, 40, 0.9);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 8px;
+		color: #ffffff;
+		padding: 0.5rem;
+		width: 80px;
+		font-size: 0.9rem;
+		outline: none;
+		transition: all 0.3s ease;
+	}
+
+	#days-input:hover {
+		border-color: rgba(255, 255, 255, 0.2);
+	}
+
+	#days-input:focus {
+		border-color: #4f46e5;
+		box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+	}
+
+	/* Search Box */
 	#search-box {
 		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.5rem;
+		gap: 1rem;
+		margin-bottom: 2rem;
 	}
 
-	/* Inputs and select dropdown */
-	input,
-	select {
-		padding: 0.5rem;
-		width: 100%;
-		max-width: 300px;
-		border-radius: 6px;
-		border: 1px solid #ccc;
+	#search-input {
+		flex: 1;
+		background: rgba(30, 30, 30, 0.8);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 12px;
+		color: #ffffff;
+		padding: 1rem 1.5rem;
 		font-size: 1rem;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+		outline: none;
+		transition: all 0.3s ease;
 	}
 
-	/* Button style */
-	button {
-		padding: 0.5rem 1.2rem;
-		background-color: #007bff;
-		color: #fff;
-		font-size: 1rem;
+	#search-input::placeholder {
+		color: #666666;
+	}
+
+	#search-input:hover {
+		border-color: rgba(255, 255, 255, 0.2);
+		background: rgba(35, 35, 35, 0.8);
+	}
+
+	#search-input:focus {
+		border-color: #4f46e5;
+		box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+		background: rgba(35, 35, 35, 0.9);
+	}
+
+	#search-btn {
+		background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
 		border: none;
-		border-radius: 6px;
+		border-radius: 12px;
+		color: #ffffff;
+		padding: 1rem 2rem;
+		font-size: 1rem;
+		font-weight: 600;
 		cursor: pointer;
-		transition: background-color 0.3s ease;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		transition: all 0.3s ease;
+		box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
 	}
 
-	button:hover {
-		background-color: #0056b3;
+	#search-btn:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+		background: linear-gradient(135deg, #5b52e8 0%, #8b44f0 100%);
 	}
 
-	/* Result section */
+	#search-btn:active {
+		transform: translateY(0);
+	}
+
+	/* Result Box */
 	#result-box {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		margin-top: 1rem;
+		background: rgba(25, 25, 25, 0.6);
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		border-radius: 16px;
+		padding: 2rem;
+		min-height: 200px;
 	}
 
-	/* Item row (label + value) */
+	#result-box h2 {
+		color: #ffffff;
+		font-size: 1.8rem;
+		font-weight: 700;
+		margin-bottom: 1.5rem;
+		text-align: center;
+	}
+
+	#result-box p {
+		color: #ff6b6b;
+		font-size: 1.1rem;
+		text-align: center;
+		padding: 2rem;
+		background: rgba(255, 107, 107, 0.1);
+		border: 1px solid rgba(255, 107, 107, 0.2);
+		border-radius: 12px;
+	}
+
+	#result-box img {
+		display: block;
+		margin: 1rem auto;
+		width: 80px;
+		height: 80px;
+		filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+	}
+
+	/* Item Styles */
 	.item {
 		display: flex;
 		justify-content: space-between;
-		width: 100%;
-		max-width: 500px;
-		margin: 0.3rem 0;
-		padding: 0.2rem 0.5rem;
-		background-color: #fff;
-		border-radius: 5px;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+		align-items: center;
+		padding: 0.8rem 0;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+		transition: all 0.3s ease;
 	}
 
-	/* Forecast cards */
+	.item:last-child {
+		border-bottom: none;
+	}
+
+	.item:hover {
+		background: rgba(255, 255, 255, 0.02);
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+		border-radius: 8px;
+	}
+
+	.item strong {
+		color: #b0b0b0;
+		font-weight: 600;
+		font-size: 0.9rem;
+	}
+
+	.item span {
+		color: #ffffff;
+		font-weight: 500;
+		font-size: 0.95rem;
+	}
+
+	/* Forecast Grid */
 	.forecast-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-		gap: 1rem;
-		width: 100%;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 1.5rem;
+		margin-top: 1rem;
 	}
 
 	.card {
-		background: #ffffff;
-		padding: 1rem;
-		border-radius: 10px;
-		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-		text-align: center;
-		transition: transform 0.2s;
+		background: rgba(35, 35, 35, 0.8);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 16px;
+		padding: 1.5rem;
+		transition: all 0.3s ease;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.card::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 3px;
+		background: linear-gradient(90deg, #4f46e5, #7c3aed, #06b6d4);
+		border-radius: 16px 16px 0 0;
 	}
 
 	.card:hover {
-		transform: scale(1.02);
+		transform: translateY(-4px);
+		box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+		border-color: rgba(255, 255, 255, 0.15);
 	}
 
-	/* Weather icons */
-	.card img,
-	#result-box img {
-		width: 64px;
-		height: 64px;
-		margin: 0.5rem auto;
+	.card img {
+		width: 60px;
+		height: 60px;
+		margin: 0 auto 1rem;
+		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 	}
 
-	/* Loader spinner */
-	/* .loader {
-		border: 4px solid #f3f3f3;
-		border-top: 4px solid #007bff;
-		border-radius: 50%;
-		width: 36px;
-		height: 36px;
-		animation: spin 1s linear infinite;
-		margin: 1rem auto;
-	} */
-
-	/* @keyframes spin {
-		0% {
-			transform: rotate(0deg);
-		}
-		100% {
-			transform: rotate(360deg);
-		}
-	} */
-
-	/* Error and info messages */
-	/* p {
-		margin: 0.5rem 0;
+	.card p {
+		text-align: center;
+		color: #ffffff;
+		font-weight: 600;
+		margin-bottom: 1rem;
 		font-size: 1rem;
-		color: #000000;
-	} */
+		background: none;
+		border: none;
+		padding: 0;
+	}
 
-	/* p.error {
-		color: red;
-		font-weight: bold;
-	} */
+	.card .item {
+		padding: 0.6rem 0;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.card .item:hover {
+		background: rgba(255, 255, 255, 0.03);
+	}
+
+	/* Responsive Design */
+	@media (max-width: 768px) {
+		main {
+			padding: 1rem;
+		}
+
+		#main {
+			padding: 1.5rem;
+		}
+
+		#search-type-box {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.8rem;
+		}
+
+		#search-box {
+			flex-direction: column;
+		}
+
+		#search-btn {
+			width: 100%;
+		}
+
+		.forecast-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 480px) {
+		#main {
+			padding: 1rem;
+		}
+
+		#result-box {
+			padding: 1rem;
+		}
+
+		.item {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.3rem;
+		}
+	}
 </style>
