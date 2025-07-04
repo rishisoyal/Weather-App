@@ -34,9 +34,9 @@
 
 	async function handleClick() {		
 		if (search_type === "current") {
-			data = await fetchData(search_input, search_type);
+			data = await fetchData(search_input.trim(), search_type);
 		} else {
-			data = await fetchData(search_input, search_type, { days: forecast_days });
+			data = await fetchData(search_input.trim(), search_type, { days: forecast_days });
 		}
 		console.log(data);
 	}
