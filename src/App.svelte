@@ -7,7 +7,7 @@
 	let data = null;
 
 	// async function to fetch weather data
-	async function fetchData(city, endpoint, options = null) {
+	async function fetchData(city, endpoint, options = {}) {
 		let url;
 
 		if (endpoint === "forecast" && options.days !== undefined) {
@@ -32,15 +32,11 @@
 		return await (await fetch(url)).json();
 	}
 
-	async function handleClick() {
-		const endpoint = search_type;
-		// console.log(endpoint);
-		const query = search_input;
-		// console.log(query);
-		if (endpoint === "current") {
-			data = await fetchData(query, endpoint);
+	async function handleClick() {		
+		if (search_type === "current") {
+			data = await fetchData(search_input, search_type);
 		} else {
-			data = await fetchData(query, endpoint, { days: forecast_days });
+			data = await fetchData(search_input, search_type, { days: forecast_days });
 		}
 		console.log(data);
 	}
@@ -182,14 +178,14 @@
 </main>
 
 <style>
-	/* Dark Weather App Styles */
+	/* Weather App Styles */
 	* {
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
 	}
 
-	body {
+	body, html{
 		font-family:
 			"Inter",
 			-apple-system,
