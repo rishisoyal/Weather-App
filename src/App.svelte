@@ -9,8 +9,8 @@
 	// Get user location from ip
 	window.addEventListener("load", async () => {
 		loading = true;
-		const ipData = await (await fetch("https://ipinfo.io/json")).json();
-		[currentData, forecastData] = await fetchData(ipData.loc);
+		const ipData = await (await fetch("https://ipwho.is")).json();
+		[currentData, forecastData] = await fetchData(`${ipData.latitude}, ${ipData.longitude}`);
 		loading = false;
 	});
 
