@@ -10,7 +10,9 @@
 	window.addEventListener("load", async () => {
 		loading = true;
 		const ipData = await (await fetch("https://ipwho.is")).json();
-		[currentData, forecastData] = await fetchData(`${ipData.latitude}, ${ipData.longitude}`);
+		[currentData, forecastData] = await fetchData(
+			`${ipData.latitude}, ${ipData.longitude}`,
+		);
 		loading = false;
 	});
 
@@ -31,9 +33,9 @@
 
 	async function handleClick() {
 		loading = true;
+		// Fetch data and store it in variables
 		[currentData, forecastData] = await fetchData(search_input.trim());
 		console.log(currentData, forecastData);
-
 		loading = false;
 	}
 </script>
@@ -60,6 +62,8 @@
 						<p>No matching location found</p>
 					{:else if currentData.error.code === 1003}
 						<p>Please provide a city name or location</p>
+					{:else}
+						<p>Some error occured...</p>
 					{/if}
 				{:else}
 					<div class="weather-layout">
