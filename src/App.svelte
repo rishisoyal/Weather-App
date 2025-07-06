@@ -158,20 +158,6 @@
 		box-sizing: border-box;
 	}
 
-	body {
-		font-family:
-			"Inter",
-			-apple-system,
-			BlinkMacSystemFont,
-			"Segoe UI",
-			Roboto,
-			sans-serif;
-		background: #0a0a0a;
-		color: #e4e4e7;
-		line-height: 1.6;
-		min-height: 100vh;
-	}
-
 	main {
 		min-height: 100vh;
 		background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
@@ -306,7 +292,8 @@
 	}
 
 	.current-weather p {
-		text-align: left;
+		display: flex;
+		justify-content: space-between;
 		margin: 0.5rem 0;
 		font-size: 0.95rem;
 	}

@@ -1,6 +1,6 @@
 # 🌤️ Weather Web App
 
-A sleek, modern web application that displays **current weather** and **14-day forecast** for any city using the **WeatherAPI API**. Users can also get local weather data automatically via IP.
+A sleek, modern web application that displays **current weather** and **14-day forecast** for any city using the **WeatherAPI API**. Users can also get local weather data automatically via IP address.
 
 <!-- ToDo -->
 <!-- ![screenshot](./screenshot.png) -->
@@ -11,7 +11,7 @@ A sleek, modern web application that displays **current weather** and **14-day f
 
 - 🌎 **Current Weather** for any city
 - 📅 **14-Day Forecast**
-- 📍 **Auto Location Detection** (via IP)
+- 📍 **Auto Location Detection** (via IP address)
 - 🖥️ **Responsive Design** — optimized for desktop and mobile
 - 🎨 Modern UI with gradient background and glassmorphism effects
 - ⚡️ Instant weather fetch using `fetch()` and async/await
@@ -39,5 +39,5 @@ A sleek, modern web application that displays **current weather** and **14-day f
 
 1. **Clone the repo**
    ```bash
-   git clone https://github.com/your-username/weather-app.git
+   git clone https://github.com/rishisoyal/weather-app.git
    cd weather-app
