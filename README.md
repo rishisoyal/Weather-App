@@ -21,7 +21,7 @@ A sleek, modern web application that displays **current weather** and **14-day f
 ## 🛠 Tech Stack
 
 - **Frontend**: Svelte
-- **API**: [weatherAPI](https://weatherapi.com)
+- **API**: [weatherAPI](https://www.weatherapi.com)
 - **UI**: Responsive Flex/Grid layout with custom styling
 
 ---
