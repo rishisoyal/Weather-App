@@ -8,21 +8,21 @@
 
 	// Get user location from ip
 	window.addEventListener("load", async () => {
-		loading = true
+		loading = true;
 		const ipData = await (await fetch("https://ipinfo.io/json")).json();
 		[currentData, forecastData] = await fetchData(ipData.loc);
-		loading = false
+		loading = false;
 	});
 
 	// async function to fetch weather data
 	async function fetchData(cityOrCoordinates) {
 		let url;
 		// Fetch current data
-		url = `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityOrCoordinates}`;
+		url = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityOrCoordinates}`;
 		const currentData = await (await fetch(url)).json();
 
 		// Fetch forecast data
-		url = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${cityOrCoordinates}&days=14`;
+		url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${cityOrCoordinates}&days=14`;
 		const forecastData = await (await fetch(url)).json();
 
 		// Return data
@@ -427,6 +427,64 @@
 		.current-weather h2,
 		.forecast-section h2 {
 			font-size: 1.25rem;
+		}
+	}
+	@media (max-width: 768px) {
+		.weather-layout {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+
+		.card {
+			padding: 1rem;
+		}
+
+		.current-weather,
+		.forecast-section {
+			padding: 1rem 0;
+			text-align: center;
+		}
+
+		#search-box {
+			flex-direction: column;
+			gap: 0.75rem;
+			align-items: stretch;
+		}
+
+		#search-input {
+			width: 100%;
+			max-width: none;
+		}
+
+		.forecast-grid {
+			grid-template-columns: 1fr;
+			gap: 0.75rem;
+		}
+
+		.forecast-card {
+			grid-template-columns: 1fr;
+			text-align: center;
+			gap: 0.5rem;
+		}
+
+		.forecast-card h4 {
+			min-width: auto;
+		}
+
+		main {
+			padding: 1rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.current-weather h2,
+		.forecast-section h2 {
+			font-size: 1.25rem;
+		}
+
+		#search-btn {
+			padding: 0.75rem 1.25rem;
+			font-size: 0.9rem;
 		}
 	}
 </style>
