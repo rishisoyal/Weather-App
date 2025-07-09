@@ -1,6 +1,7 @@
 # 🌤️ Weather Web App
 
 A sleek, modern web application that displays **current weather** and **3-day forecast** for any city using the **WeatherAPI API**. Users can also get local weather data automatically via IP address.
+A sleek, modern web application that displays **current weather** and **3-day forecast** for any city using the **WeatherAPI API**. Users can also get local weather data automatically via IP address.
 
 <!-- ToDo -->
 <!-- ![screenshot](./screenshot.png) -->
@@ -10,6 +11,7 @@ A sleek, modern web application that displays **current weather** and **3-day fo
 ## 🚀 Features
 
 - 🌎 **Current Weather** for any city
+- 📅 **3-Day Forecast**
 - 📅 **3-Day Forecast**
 - 📍 **Auto Location Detection** (via IP address)
 - 🖥️ **Responsive Design** — optimized for desktop and mobile
