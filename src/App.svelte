@@ -56,7 +56,28 @@
 
         <div id="result-box">
             {#if loading}
-                <div class="loader">Fetching data...</div>
+                <div id="loader-container">
+                    <svg id="loader" viewBox="0 0 16 16">
+                        <circle
+                            cx="8"
+                            cy="8"
+                            r="7"
+                            stroke="currentColor"
+                            stroke-opacity="0.25"
+                            stroke-width="2"
+                            vector-effect="non-scaling-stroke"
+                            fill="none"
+                        ></circle>
+                        <path
+                            d="M15 8a7.002 7.002 0 00-7-7"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            vector-effect="non-scaling-stroke"
+                            fill="none"
+                        ></path>
+                    </svg>
+                </div>
             {:else if currentData !== null && forecastData !== null}
                 {#if currentData.error}
                     {#if currentData.error.code === 1006 || currentData.error.code === 1005}
@@ -168,6 +189,29 @@
     #main {
         max-width: 1400px;
         margin: 0 auto;
+    }
+
+    /* loader */
+    #loader-container{
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #loader {
+        color: white;
+        width: 100px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
     }
 
     /* Search Section */
