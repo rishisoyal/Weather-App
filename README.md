@@ -12,7 +12,6 @@ A sleek, modern web application that displays **current weather** and **3-day fo
 
 - 🌎 **Current Weather** for any city
 - 📅 **3-Day Forecast**
-- 📅 **3-Day Forecast**
 - 📍 **Auto Location Detection** (via IP address)
 - 🖥️ **Responsive Design** — optimized for desktop and mobile
 - 🎨 Modern UI with gradient background and glassmorphism effects
@@ -36,7 +35,7 @@ A sleek, modern web application that displays **current weather** and **3-day fo
 | ![desktop](./preview-desktop.png) | ![mobile](./preview-mobile.png) |
 -->
 
----
+<!-- --- -->
 
 ## 🔧 Setup Instructions
 
